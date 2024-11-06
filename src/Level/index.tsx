@@ -3,7 +3,7 @@ import Bottle from "./components/Bottle";
 import * as styles from "./index.module.scss";
 import { mixColor, resultSettle } from "../utils/tool";
 import LEVEL_MAP from "../constant/levelMap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Modal from "../components/Modal";
 
 function bottlesOperationReducer(bottles, action) {
@@ -22,7 +22,8 @@ function bottlesOperationReducer(bottles, action) {
 }
 
 function Level() {
-    const { id } = useParams();
+    const [searchParams] = useSearchParams()
+    const id = searchParams.get('id')
     const navigate = useNavigate();
     const levelConfig = LEVEL_MAP[id].config;
     const mixedBottles = mixColor(levelConfig);

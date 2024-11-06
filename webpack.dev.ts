@@ -9,6 +9,9 @@ const config: webpack.Configuration = merge(common, {
     devServer: {
         historyApiFallback: true,
     },
+    output: {
+        publicPath: "/",
+    },
     module: {
         rules: [
             {

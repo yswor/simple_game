@@ -13,7 +13,7 @@ const LevelSelection = () => {
         <div className={styles.container}>
             <div className={styles.levels}>
                 {levels.map((e) => (
-                    <Link key={e.id} className={styles.level} to={`/level/${e.id}`}>
+                    <Link key={e.id} className={styles.level} to={`/level?id=${e.id}`}>
                         {e.name}
                     </Link>
                 ))}

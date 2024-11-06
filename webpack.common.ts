@@ -8,7 +8,6 @@ const config: webpack.Configuration = {
         path: path.resolve(__dirname, "dist"),
         filename: "[name].bundle.js",
         clean: true,
-        publicPath: "/",
     },
     module: {
         rules: [

@@ -15,7 +15,7 @@ const router = createBrowserRouter([
         element: <LevelSelection />,
     },
     {
-        path: "level/:id",
+        path: "level",
         element: <Level />,
     },
 ]);
