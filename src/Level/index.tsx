@@ -75,7 +75,7 @@ function Level() {
     };
 
     const toNextLevel = () => {
-        navigate(`/level/${Number(id) + 1}`);
+        navigate(`/level?id=${Number(id) + 1}`);
     };
 
     return (
