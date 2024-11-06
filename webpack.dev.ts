@@ -1,15 +1,10 @@
-import * as path from "path";
 import * as webpack from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
+import { merge } from "webpack-merge";
+import common from "./webpack.common";
 
-const config: webpack.Configuration = {
+const config: webpack.Configuration = merge(common, {
     mode: "development",
-    entry: "./src/index.tsx",
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].bundle.js",
-        clean: true,
-    },
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {
@@ -28,21 +23,8 @@ const config: webpack.Configuration = {
                     "sass-loader",
                 ],
             },
-            {
-                test: /\.tsx?$/,
-                use: ["babel-loader"],
-                exclude: /node_modules/,
-            },
         ],
     },
-    resolve: {
-        extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: "public/index.html",
-        }),
-    ],
-};
+});
 
 export default config;
