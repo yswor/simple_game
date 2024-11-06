@@ -1,0 +1,30 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    .levels {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        .level {
+            display: inline-block;
+            width: 120px;
+            height: 32px;
+            border-radius: 16px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+    
+            background: #912f40;
+            border: 1px solid #40434e;
+            margin: 12px;
+        }
+    }
+}

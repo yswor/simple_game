@@ -1,21 +1,32 @@
 export const COLORS = ["red", "yellow", "green", "blue", "purple", "orange", "pink"];
 
-type MixColorParams = {
+export type MixColorParams = {
     bottleNumber: number;
     blockNumber: number;
     colorNumber: number;
     mixCount: number;
+    emptyBlockNumber: number;
 };
 // 混淆色块
-export function mixColor({ bottleNumber, blockNumber, colorNumber, mixCount }: MixColorParams) {
+export function mixColor({
+    bottleNumber,
+    blockNumber,
+    emptyBlockNumber,
+    colorNumber,
+    mixCount,
+}: MixColorParams) {
     if (colorNumber > bottleNumber) {
         throw new Error("颜色数量大于瓶子数量");
     }
 
     const colors = COLORS.slice(0, colorNumber);
+    const emptyList = new Array(emptyBlockNumber).fill("");
     const bottles = new Array(bottleNumber)
         .fill("")
-        .map((e, i) => ["", ...new Array(blockNumber - 1).fill(colors[i] ?? "")]);
+        .map((e, i) => [
+            ...emptyList,
+            ...new Array(blockNumber - emptyBlockNumber).fill(colors[i] ?? ""),
+        ]);
 
     let stepCount = 1;
     let loopCount = 1;
@@ -54,4 +65,22 @@ export function mixColor({ bottleNumber, blockNumber, colorNumber, mixCount }: M
     }
 
     return mixedBottles;
+}
+
+export function resultSettle(bottles: string[][], levelConfig: MixColorParams) {
+    let index = 0;
+    const colorBlockNumber = levelConfig.blockNumber - levelConfig.emptyBlockNumber
+    while (bottles.length > index) {
+        const bottle = bottles[index];
+
+        if (
+            bottle.length &&
+            (bottle.some((e) => e !== bottle[0]) || bottle.length !== colorBlockNumber)
+        ) {
+            return false;
+        }
+        index += 1;
+    }
+
+    return true;
 }
