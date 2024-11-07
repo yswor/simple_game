@@ -1,12 +1,12 @@
 import { useState } from "react";
 import * as styles from "./index.module.scss";
 import { Link } from "react-router-dom";
-import LEVEL_MAP from "../constant/levelMap";
+import { number2ch } from "../utils/tool";
 
 const LevelSelection = () => {
-    const levels = Object.keys(LEVEL_MAP).map((e) => ({
-        name: LEVEL_MAP[e].name,
-        id: Number(e),
+    const levels = new Array(20).fill("").map((e, i) => ({
+        name: `第${number2ch(i + 1)}关`,
+        id: i + 1,
     }));
 
     return (

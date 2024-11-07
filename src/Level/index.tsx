@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import Bottle from "./components/Bottle";
 import * as styles from "./index.module.scss";
-import { mixColor, resultSettle } from "../utils/tool";
-import LEVEL_MAP from "../constant/levelMap";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { levelGeneration, mixColor, number2ch, resultSettle } from "../utils/tool";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "../components/Modal";
 
 function Level() {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("id");
     const navigate = useNavigate();
-    const levelConfig = LEVEL_MAP[id].config;
+    const levelConfig = levelGeneration(Number(id));
     const [bottles, setBottles] = useState([]);
     const [exporter, setExporter] = useState<{ index: number; value: string[] } | null>(null);
     const [modalOpen, setModalOpen] = useState(false);
@@ -78,27 +77,27 @@ function Level() {
 
     return (
         <div className={styles.container}>
-            {bottles.map((e, i) => (
-                <Bottle
-                    key={i}
-                    len={levelConfig.blockNumber}
-                    active={i === exporter?.index}
-                    blocks={e}
-                    onClick={() => clickBottle(i)}
-                />
-            ))}
+            <div className={styles.levelTitle}>第{number2ch(Number(id))}关</div>
+            <div className={styles.bottles}>
+                {bottles.map((e, i) => (
+                    <Bottle
+                        key={i}
+                        len={levelConfig.blockNumber}
+                        active={i === exporter?.index}
+                        blocks={e}
+                        onClick={() => clickBottle(i)}
+                    />
+                ))}
+            </div>
+            <div className={styles.footer} onClick={toNextLevel}>
+                下一关
+            </div>
             <Modal open={modalOpen}>
                 <div className={styles.modal}>
-                    {Object.keys(LEVEL_MAP).length > Number(id) ? (
-                        <>
-                            <div className={styles.completeText}>恭喜通关!</div>
-                            <div className={styles.nextLevel} onClick={toNextLevel}>
-                                下一关
-                            </div>
-                        </>
-                    ) : (
-                        <div className={styles.completeText}>目前只有这么多关</div>
-                    )}
+                    <div className={styles.completeText}>恭喜通关!</div>
+                    <div className={styles.nextLevel} onClick={toNextLevel}>
+                        下一关
+                    </div>
                 </div>
             </Modal>
         </div>

@@ -67,9 +67,10 @@ export function mixColor({
     return mixedBottles;
 }
 
+// 通关检测
 export function resultSettle(bottles: string[][], levelConfig: MixColorParams) {
     let index = 0;
-    const colorBlockNumber = levelConfig.blockNumber - levelConfig.emptyBlockNumber
+    const colorBlockNumber = levelConfig.blockNumber - levelConfig.emptyBlockNumber;
     while (bottles.length > index) {
         const bottle = bottles[index];
 
@@ -83,4 +84,78 @@ export function resultSettle(bottles: string[][], levelConfig: MixColorParams) {
     }
 
     return true;
+}
+
+// 关卡生成
+export function levelGeneration(i: number) {
+    const index = i - 1;
+    const primaryLevel = Math.floor(index / 10);
+    const level = index % 10;
+
+    const emptyBlockNumberEnum = [1, 1, 2, 2, 3, 3, 3, 3, 3, 3];
+
+    const bottleNumber = 4 + primaryLevel;
+    const blockNumber = 6 + level;
+    const colorNumber = 4 + primaryLevel;
+    const emptyBlockNumber = emptyBlockNumberEnum[level];
+    const mixCount = 10000 * (level + 1) * (primaryLevel + 1);
+
+    return {
+        bottleNumber,
+        blockNumber,
+        colorNumber,
+        emptyBlockNumber,
+        mixCount,
+    };
+}
+
+const chars = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+const units = ["", "十", "百", "千"];
+function _handleZero(str) {
+    return str.replace(/零{2,}/g, "零").replace(/零+$/, "");
+}
+
+export function number2ch(index: number) {
+    const bigUnits = ["", "万", "亿"];
+
+    const numStr = index
+        .toString()
+        .replace(/(?=(\d{4})+$)/g, ",")
+        .split(",")
+        .filter(Boolean);
+
+    let result = "";
+    for (let i = 0; i < numStr.length; i++) {
+        const part = numStr[i];
+        const c = _transform(part);
+        let u = bigUnits[numStr.length - i - 1];
+        // 也是需要考虑当四位为0的情况不需要添加单位
+        if (c === chars[0]) {
+            u = "";
+        }
+        result += c + u;
+    }
+
+    return _handleZero(result);
+}
+
+function _transform(n) {
+    // 处理四位全部为0
+    if (n === "0000") {
+        return chars[0];
+    }
+    let result = "";
+    for (let i = 0; i < n.length; i++) {
+        // 转换汉字
+        const c = chars[+n[i]];
+        // 加单位 得到单位
+        let u = units[n.length - 1 - i];
+        // 处理0不加单位
+        if (c === chars[0]) {
+            u = "";
+        }
+        result += c + u;
+    }
+    // 处理重复零，末尾零情况
+    return _handleZero(result);
 }
