@@ -19,8 +19,8 @@ const LEVEL_MAP: {
     2: {
         name: "第二关",
         config: {
-            bottleNumber: 3,
-            blockNumber: 5,
+            bottleNumber: 4,
+            blockNumber: 6,
             colorNumber: 3,
             emptyBlockNumber: 1,
             mixCount: 1000,
@@ -32,7 +32,7 @@ const LEVEL_MAP: {
             bottleNumber: 4,
             blockNumber: 6,
             colorNumber: 4,
-            emptyBlockNumber: 1,
+            emptyBlockNumber: 0,
             mixCount: 1000,
         },
     },

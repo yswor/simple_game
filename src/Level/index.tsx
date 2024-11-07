@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import Bottle from "./components/Bottle";
 import * as styles from "./index.module.scss";
 import { mixColor, resultSettle } from "../utils/tool";
@@ -6,29 +6,31 @@ import LEVEL_MAP from "../constant/levelMap";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Modal from "../components/Modal";
 
-function bottlesOperationReducer(bottles, action) {
-    switch (action.type) {
-        case "shift": {
-            const bottlesCopy = [...bottles];
-            bottlesCopy[action.index] = bottles[action.index].slice(1);
-            return bottlesCopy;
-        }
-        case "unshift": {
-            const bottlesCopy = [...bottles];
-            bottlesCopy[action.index] = [action.value, ...bottles[action.index]];
-            return bottlesCopy;
-        }
-    }
-}
-
 function Level() {
-    const [searchParams] = useSearchParams()
-    const id = searchParams.get('id')
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get("id");
     const navigate = useNavigate();
     const levelConfig = LEVEL_MAP[id].config;
-    const mixedBottles = mixColor(levelConfig);
-    const [bottles, dispatch] = useReducer(bottlesOperationReducer, mixedBottles);
+    const [bottles, setBottles] = useState([]);
     const [exporter, setExporter] = useState<{ index: number; value: string[] } | null>(null);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (id) {
+            const mixedBottles = mixColor(levelConfig);
+            setBottles(mixedBottles);
+        }
+    }, [id]);
+
+    const pourWater = (exporterIndex: number, recieverIndex: number) => {
+        const bottlesCopy = [...bottles];
+
+        const exporter = bottles[exporterIndex];
+        bottlesCopy[exporterIndex] = bottles[exporterIndex].slice(1);
+        bottlesCopy[recieverIndex] = [exporter[0], ...bottles[recieverIndex]];
+        setBottles(bottlesCopy);
+        return bottlesCopy;
+    };
 
     const clickBottle = (i: number) => {
         const bottle = bottles[i];
@@ -47,16 +49,11 @@ function Level() {
                 return;
             }
 
-            const exporterTopColor = exporter.value[0];
-            dispatch({
-                type: "shift",
-                index: exporter.index,
-            });
-            dispatch({
-                type: "unshift",
-                index: i,
-                value: exporterTopColor,
-            });
+            const handledBottles = pourWater(exporter.index, i);
+
+            if (resultSettle(handledBottles, levelConfig)) {
+                setModalOpen(true);
+            }
 
             setExporter(null);
             return;
@@ -75,7 +72,8 @@ function Level() {
     };
 
     const toNextLevel = () => {
-        navigate(`/level?id=${Number(id) + 1}`);
+        setModalOpen(false);
+        navigate(`/level?id=${Number(id) + 1}`, { replace: true });
     };
 
     return (
@@ -89,7 +87,7 @@ function Level() {
                     onClick={() => clickBottle(i)}
                 />
             ))}
-            <Modal open={resultSettle(bottles, levelConfig)}>
+            <Modal open={modalOpen}>
                 <div className={styles.modal}>
                     {Object.keys(LEVEL_MAP).length > Number(id) ? (
                         <>
