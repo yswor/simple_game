@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Level from "./Level";
 import LevelSelection from "./LevelSelection";
+import './index.scss'
 
 const router = createBrowserRouter([
     {

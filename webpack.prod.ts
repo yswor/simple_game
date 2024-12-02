@@ -14,6 +14,7 @@ const config: webpack.Configuration = merge(common, {
         rules: [
             {
                 test: /\.scss$/,
+                exclude: path.resolve(__dirname, 'src/index.scss'),
                 use: [
                     "style-loader",
                     {

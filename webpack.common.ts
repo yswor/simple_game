@@ -16,6 +16,11 @@ const config: webpack.Configuration = {
                 use: ["babel-loader"],
                 exclude: /node_modules/,
             },
+            {
+                test: /\.scss$/,
+                include: path.resolve(__dirname, 'src/index.scss'),
+                use: ["style-loader", "css-loader", "sass-loader"],
+            },
         ],
     },
     resolve: {
