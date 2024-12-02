@@ -1,6 +1,6 @@
 import * as styles from "./index.module.scss";
 
-const Modal = ({ children, open }) => {
+const Modal = ({ children, open, onClose = () => {} }) => {
 
     if (!open) {
         return null
@@ -8,7 +8,7 @@ const Modal = ({ children, open }) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.mask} />
+            <div className={styles.mask} onClick={onClose} />
             <div className={styles.content}>{children}</div>
         </div>
     );

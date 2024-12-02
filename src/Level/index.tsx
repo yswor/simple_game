@@ -24,9 +24,9 @@ function Level() {
     const pourWater = (exporterIndex: number, recieverIndex: number) => {
         const bottlesCopy = [...bottles];
 
-        const exporter = bottles[exporterIndex];
+        const exporterItem = bottles[exporterIndex];
         bottlesCopy[exporterIndex] = bottles[exporterIndex].slice(1);
-        bottlesCopy[recieverIndex] = [exporter[0], ...bottles[recieverIndex]];
+        bottlesCopy[recieverIndex] = [exporterItem[0], ...bottles[recieverIndex]];
         setBottles(bottlesCopy);
         return bottlesCopy;
     };
