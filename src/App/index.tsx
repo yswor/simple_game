@@ -10,7 +10,15 @@ function App() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.title}>倒水游戏</div>
+            <div className={styles.logoBox}>
+                <div className={styles.logo}>
+                    <div className={styles.bottle}></div>
+                    <div className={styles.bottle}></div>
+                    <div className={styles.bottle}></div>
+                    <div className={styles.bottle}></div>
+                    <div className={styles.center}></div>
+                </div>
+            </div>
             <div className={styles.startBtn} onClick={toLevelSelection}>
                 开始游戏
             </div>

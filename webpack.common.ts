@@ -21,6 +21,10 @@ const config: webpack.Configuration = {
                 include: path.resolve(__dirname, 'src/index.scss'),
                 use: ["style-loader", "css-loader", "sass-loader"],
             },
+            {
+                test:/\.svg|gif|png|jpe?g$/,
+                use: ["file-loader"]
+            }
         ],
     },
     resolve: {

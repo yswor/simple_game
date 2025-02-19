@@ -3,6 +3,7 @@ import * as styles from "./index.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { number2ch } from "../utils/tool";
 import Modal from "../components/Modal";
+import ExtraAction from "../components/ExtraAction";
 
 const LevelSelection = () => {
     const navigate = useNavigate();
@@ -97,6 +98,7 @@ const LevelSelection = () => {
                     </div>
                 </div>
             </Modal>
+            <ExtraAction />
         </div>
     );
 };

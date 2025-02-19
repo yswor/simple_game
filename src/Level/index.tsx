@@ -4,6 +4,7 @@ import * as styles from "./index.module.scss";
 import { levelGeneration, mixColor, number2ch, resultSettle } from "../utils/tool";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "../components/Modal";
+import ExtraAction from "../components/ExtraAction";
 
 function Level() {
     const [searchParams] = useSearchParams();
@@ -89,9 +90,6 @@ function Level() {
                     />
                 ))}
             </div>
-            <div className={styles.footer} onClick={toNextLevel}>
-                下一关
-            </div>
             <Modal open={modalOpen}>
                 <div className={styles.modal}>
                     <div className={styles.completeText}>恭喜通关!</div>
@@ -100,6 +98,7 @@ function Level() {
                     </div>
                 </div>
             </Modal>
+            <ExtraAction />
         </div>
     );
 }

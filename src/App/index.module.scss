@@ -6,19 +6,85 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    .title {
-        font-size: 64px;
-        color: #702632;
-        margin: 0 0 124px;
+
+    .logoBox {
+        position: relative;
+        .logo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: -1;
+
+            width: 120px;
+            height: 120px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px 4px #00000020;
+
+            animation: rotateLoop 10s linear infinite;
+            overflow: hidden;
+
+            .bottle {
+                position: absolute;
+                left: 0;
+                top: 0;
+                display: inline-block;
+                width: 60px;
+                height: 56px;
+                background: #1685a9;
+                border-bottom-right-radius: 56px;
+                &:nth-child(2) {
+                    left: 4px;
+                    top: 0;
+                    transform: rotateZ(270deg);
+                    transform-origin: top right;
+                    border-top-left-radius: 56px;
+                    border-bottom-right-radius: 0;
+                }
+                &:nth-child(3) {
+                    left: 60px;
+                    top: 64px;
+                    border-top-left-radius: 56px;
+                    border-bottom-right-radius: 0;
+                }
+                &:nth-child(4) {
+                    left: 0;
+                    top: 120px;
+                    transform: rotateZ(270deg);
+                    transform-origin: top left;
+                }
+            }
+            .center {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #065279;
+            }
+        }
+
+        @keyframes rotateLoop {
+            from {
+                transform: translate(-50%, -50%) rotateZ(0);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotateZ(360deg);
+            }
+        }
     }
 
     .startBtn {
+        cursor: pointer;
+        margin-top: 320px;
         font-size: 16px;
         text-decoration: none;
         color: #fff;
         width: 120px;
         height: 40px;
-        background: #912f40;
+        background: #1685a9;
         border: 1px solid #fffffa;
         border-radius: 12px;
         display: flex;

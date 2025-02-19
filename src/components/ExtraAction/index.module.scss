@@ -1,0 +1,113 @@
+.container {
+    position: fixed;
+    width: 100px;
+    height: 32px;
+    right: 0;
+    bottom: 32vh;
+    .signal {
+        width: 100px;
+        height: 32px;
+        padding-left: 12px;
+        border-radius: 16px 0 0 16px;
+        box-shadow: 0 0 2px 2px #ffa40099;
+        cursor: pointer;
+        overflow: hidden;
+
+        background: #ffa400;
+        color: #fff;
+        position: absolute;
+        right: -68px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .icon {
+            margin-right: 8px;
+            transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+
+            width: 16px;
+            height: 16px;
+        }
+        .line {
+            width: 80px;
+            height: 2px;
+            background: #fff;
+            display: none;
+        }
+    }
+
+    .menuBox {
+        position: absolute;
+        top: 0;
+        left: 100px;
+        z-index: -2;
+
+        .menu {
+            width: 90px;
+            height: 32px;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            color: #fff;
+            background: #ffa400;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+
+            font-size: 12px;
+        }
+    }
+
+    &.expanded {
+        .signal {
+            right: 0;
+            .icon {
+                transform: rotateZ(-180deg);
+            }
+
+            .line {
+                display: inline-block;
+            }
+        }
+
+        .menuBox {
+            left: 10px;
+
+            .menu {
+                border-bottom: solid 1px #fff;
+
+                &:first-child {
+                    border-top: solid 1px #fff;
+                }
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                transition: top 0.3s;
+                &:nth-child(1) {
+                    top: 32px;
+                    z-index: -1;
+                }
+                &:nth-child(2) {
+                    top: 64px;
+                    transition-delay: 0.1s;
+                    z-index: -2;
+                    transition-duration: 0.2s;
+                }
+                &:nth-child(3) {
+                    top: 96px;
+                    transition-delay: 0.3s;
+                    transition-duration: 0.1s;
+                    z-index: -3;
+                }
+            }
+        }
+    }
+}
